@@ -28,5 +28,34 @@ def load_images(folder_path):
     return images
  
 
-glioma_dir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\Train\Train\Glioma\images"
-glioma_train = load_images(glioma_dir)
+glioma_tdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\Train\Train\Glioma\images"
+meningioma_tdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\Train\Train\Meningioma\images"
+non_tumor_tdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\Train\Train\No Tumor\images"
+pituitary_tdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\Train\Train\Pituitary\images"
+
+glioma_train = load_images(glioma_tdir)
+meningioma_train = load_images(meningioma_tdir)
+non_tumor_train = load_images(non_tumor_tdir)
+pituitary_tdir = load_images(pituitary_tdir)
+
+medical_train = [glioma_train, meningioma_train, non_tumor_train, pituitary_tdir]
+print(f"Total Training Images: {sum(len(img) for img in medical_train)}")
+print("All Training Images Loaded Successfully!")
+
+glioma_tsdir =r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\test\test\Glioma\images"
+meningioma_tsdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\test\test\Meningioma\images"
+non_tumor_tsdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\test\test\No Tumor\images"
+pituitary_tsdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\test\test\Pituitary\images"
+
+glioma_test = load_images(glioma_tsdir)
+meningioma_test = load_images(meningioma_tsdir)
+non_tumor_test = load_images(non_tumor_tsdir)
+pituitary_test = load_images(pituitary_tsdir)
+
+
+medical_train = [glioma_train, meningioma_train, non_tumor_train, pituitary_tdir]
+print(f"Total Training Images: {sum(len(img) for img in medical_train)}")
+print("All Training Images Loaded Successfully!")
+medical_test = [glioma_test, meningioma_test, non_tumor_test, pituitary_test]
+print(f"Total Testing Images: {sum(len(img) for img in medical_test)}")
+print("All Testing Images loaded successfully!")
