@@ -96,3 +96,4 @@ def display_img(
 
 train_images = display_img(medical_train, node_index =2, max_images = 20)
 test_images = display_img(medical_test, node_index= 2, max_images = 20)
+
