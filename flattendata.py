@@ -1,17 +1,25 @@
 import numpy as np
 from imagedata_NeoroScan import medical_train, medical_test
 
-# # def flatten_data(image_data):
-# #     flattened = []
-# #     for data in image_data:
-# #         for img in data:
-# #             img_array = np.array(img)
-# #             flattened.append(img_array.flatten())
 
-# #     return np.array(flattened)
 
-# imgtrain = flatten_data(medical_train)
-# imgtest = flatten_data(medical_test)
+def flatten_data(image_data):
+    flattened = []
 
-# print(f"Flattened Training Data Shape: {np.array(imgtrain).shape}")
-# print(f"Flattened Testing Data Shape: {np.array(imgtest).shape}")
+    for label, class_img in enumerate(image_data):
+        if class_img is None:
+            continue
+
+        for img in class_img:
+            if img is None:
+                continue
+
+            flattened.append((img, label))
+
+    return flattened
+
+
+imgtrain = flatten_data(medical_train)
+imgtest = flatten_data(medical_test)
+
+
