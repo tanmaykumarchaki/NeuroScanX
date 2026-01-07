@@ -1,5 +1,8 @@
 import os 
 from PIL import Image
+import matplotlib.pyplot as plt
+import numpy as np
+import random
 
 valid_extentions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']
 
@@ -56,6 +59,40 @@ pituitary_test = load_images(pituitary_tsdir)
 medical_train = [glioma_train, meningioma_train, non_tumor_train, pituitary_tdir]
 print(f"Total Training Images: {sum(len(img) for img in medical_train)}")
 print("All Training Images Loaded Successfully!")
+
 medical_test = [glioma_test, meningioma_test, non_tumor_test, pituitary_test]
 print(f"Total Testing Images: {sum(len(img) for img in medical_test)}")
 print("All Testing Images loaded successfully!")
+
+#Image Display 
+def display_img(
+        nested_variable,
+        node_index = None,
+        max_images = 10,
+        figsize = (15,15)
+
+):
+    if node_index is not None:
+        node = random.choice(nested_variable)
+    else:
+        node = nested_variable[node_index]
+
+    images = random.sample(node, min(len(node), max_images))
+    plt.figure(figsize= figsize)
+
+    for idx , img in enumerate(images):
+        plt.subplot(1 , len(images), idx + 1)
+
+        if isinstance(img, Image.Image):
+            plt.imshow(img)
+
+        else:
+            plt.imshow(img, Image.Image)
+
+        plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+train_images = display_img(medical_train, node_index =2, max_images = 20)
+test_images = display_img(medical_test, node_index= 2, max_images = 20)
