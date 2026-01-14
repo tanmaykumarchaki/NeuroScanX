@@ -21,7 +21,7 @@ def img_metadata(image_path):
     } # storing metadata in a dictionary
     return metadata
 
-print(dis.dis(img_metadata))
+print("Image MetaData Function ",dis.dis(img_metadata))
 
 #converting image to tensor using torch and PIL
 
@@ -30,4 +30,12 @@ def tensorimg(image_variable):
     image_tensor = torch.from_numpy(np.array(image))
     return image_tensor
 
-print(dis.dis(tensorimg))
+print("Tensoring Image Function",dis.dis(tensorimg))
+
+def vectorimg(image_variable):
+    image = img.open(image_variable)
+    img_vector = torch.flatten(torch.from_numpy(np.array(image)))
+    return img_vector
+
+print("Vectorising Function",dis.dis(vectorimg))
+
