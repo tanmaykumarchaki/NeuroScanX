@@ -94,11 +94,5 @@ def display_img(
     plt.tight_layout()
     plt.show()
 
-train_images = display_img(medical_train, node_index =2, max_images = 20)
-test_images = display_img(medical_test, node_index= 2, max_images = 20)
 
-def main():
-    print("Image Data Module for Medical Images Loaded Successfully!")
 
-if __name__ == "__name__":
-    main()
