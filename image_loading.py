@@ -33,22 +33,39 @@ def tensorimg(image_variable):
 
 print("Tensoring Image Function",dis.dis(tensorimg))
 
+def structure_img(obj , level = 0):
+    indent = "  " * level
+    print(f"{indent}Type: {type(obj)}")
+
+    if isinstance(obj , (list, tuple)) and len(obj) > 0:
+        print(f"{indent}Lenght: {len(obj)}")
+        structure_img(obj[0], level + 1)
+
+    elif isinstance(obj, dict):
+        first_key = next(iter(obj))
+        print(f"{indent}Key Type: {type(first_key)}")
+        structure_img(obj[first_key], level + 1)
+
+print("Structuring Image function =", dis.dis(structure_img))
+
 
 def vectorimg(image_list):
-    tensor_list = []
+    vectors = []
 
     transform = transforms.Compose([
         transforms.Resize((128, 128)), # Resize the images into 128 x 128
         transform.ToTensor()
     ])
 
-    for _img_ in image_list:
-        _img_ = img.open(_img_).convert('RGB')
-        tensor_img = transform(_img_)
-        tensor_list.append(tensor_img)
 
-        for i in tensor_list:
-            vectors =[i.view(-1) for i in tensor_list]
+    for _img_ in image_list:
+        
+        _img_ = img.open(_img_).convert('RGB') 
+        tensor_img = torch.from_numpy(np.array(_img_))
+        vectors.append(tensor_img)
+
+        for i in vectors:
+            vectors =[i.view(-1) for i in vectors]
             vector_tensor = torch.stack(vectors) # Stacking all vectors into a single tensor 
 
         return vector_tensor
