@@ -1,5 +1,12 @@
 # NeuroScanX
 Multi-modal medical imaging AI using PyTorch for early disease detection, featuring a memory-efficient tensor pipeline, custom datasets, and clinically aware evaluation for real-world use.
 
-## Stage - 1 : Data Validation
-The Initial Stage of data variation where we have our image data's for different CT's Scans and MRI's into the Jupyter Notebook named *data_validation.py*.
+# Current
+- Medical Images extracted from the files and converted into nested variables
+- Medical Images are separated into Medical Train and Medical Test
+- Using `matplotlib.pyplot`, Images have been generated visually in `main.iypnb`
+- Structures of Nested Variable has been loaded into the notebook.
+
+# Next Task
+- Updating `vectorimg()` function
+- Initiation (Early) to Machine learning algorithm
