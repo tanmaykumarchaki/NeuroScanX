@@ -49,25 +49,40 @@ def structure_img(obj , level = 0):
 print("Structuring Image function =", dis.dis(structure_img))
 
 
-def vectorimg(image_list):
-    vectors = []
+class imageconvert:
+    def __init__(self):
+        self.image = None
+        self.vectors = []
+        self.tensors = []
+        self.labels = []
+    
+    def vectorimg_flat(self, image_var):
+        for class_group in image_var:
+            for img in class_group:
+                self.image = img.convert('RGB')
+                self.image_tensor = torch.from_numpy(np.array(self.image))
+                self.image_vec = self.image_tensor.view(-1)
+                self.vectors.append(self.image_vec)
 
-    transform = transforms.Compose([
-        transforms.Resize((128, 128)), # Resize the images into 128 x 128
-        transform.ToTensor()
-    ])
+        return torch.stack(self.vectors)
+    
+    def transformer(self, image_var, size=(224,224)):
+        transform = transforms.Compose([
+            transforms.Resize(size),
+            transforms.ToTensor()
+        ])
 
+        for labels , class_group in enumerate(image_var):
+            for img in class_group:
+                self.image = img.convert('RGB')
+                self.image_tensor = transform(self.image)
+                self.tensors.append(self.image_tensor)
+                self.labels.append(labels)
 
-    for _img_ in image_list:
-        
-        _img_ = img.open(_img_).convert('RGB') 
-        tensor_img = torch.from_numpy(np.array(_img_))
-        vectors.append(tensor_img)
+        return torch.stack(self.tensors) , torch.tensor(self.labels)
+    
 
-        for i in vectors:
-            vectors =[i.view(-1) for i in vectors]
-            vector_tensor = torch.stack(vectors) # Stacking all vectors into a single tensor 
+print("Image Conversion Class =", dis.dis(imageconvert))
 
-        return vector_tensor
+ 
 
-print("Vectorizing Image Function =", dis.dis(vectorimg))
