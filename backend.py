@@ -1,4 +1,4 @@
-# from pydantic import BaseModel
+from pydantic import BaseModel
 from fastapi import FastAPI
 from dataclasses import dataclass
 
@@ -11,7 +11,7 @@ class DeveloperInfo():
     product_type : str 
     domain : str 
 
-@dataclass
+
 class DatasetInfo():
     data_name: str
     size: str
@@ -19,16 +19,20 @@ class DatasetInfo():
     nested_status: str
 
 class marksobtained():
-    tenth : float
-    twelvth : float
-    grad : float
+    id : int
+    standard: str
+    marks : float
 
-    def __init__(self, tenth, twelvth, grad):
-        self.tenth = tenth,
-        self.twelvth = twelvth,
-        self.grad = grad,
+    def __init__(self, id, standard, marks):
+        self.id = id,
+        self.standard = standard,
+        self.marks = marks
         
-
+marks = [
+    marksobtained(id =1, standard="tenth", marks=85.71),
+    marksobtained(id =2, standard="twelveth",marks=73.13),
+    marksobtained(id =3, standard="grads(CGPA)",marks =7.81)
+]
 
 
 
@@ -36,6 +40,19 @@ class marksobtained():
 def greet():
     return  "Welcome to the NeuroScan Service!"
 
+@app.post("/User Input")
+class user_input:
+    name : str
+    email : str
+    password: int
+
+    def __init__(self, name,email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+        
+def user():
+    return user_input()
 
 @app.get("/Developer Info")
 def get_details():
@@ -57,13 +74,21 @@ I work across data analysis, pattern discovery, and machine learning, transformi
 
 I am focused on continuous skill development in analytics, data science, and applied machine learning, and I seek opportunities to contribute to impact-driven teams where data directly informs intelligent, measurable decisions."""
 
-@app.get("/Marks Obtained")
+@app.get("/Marks-Obtained")
 def get_marks():
-    return marksobtained(
-        tenth = 85.71,
-        twelvth= 73.16,
-        grad=7.81
-    )
+    return marks
+
+@app.get("/marks/{id}")
+def get_marks_by_id(id: int):
+    for mark in marks:
+        if mark.id == id:
+            return marks
+
+    return marks[id-1]
+    # return marks[id -1]
+
+
+
 
 @app.get("/Dataset Description")
 def get_datadesc():
