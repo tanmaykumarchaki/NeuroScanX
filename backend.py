@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 from dataclasses import dataclass
 
+
 app = FastAPI()
 @dataclass
 class DeveloperInfo():
@@ -96,7 +97,7 @@ def get_marks_by_id(id: int):
     return marks[id-1]
     # return marks[id -1]
 
-nested_dataset = [
+nested_dataset = {
     DatasetInfo(
         data_name = "Medical Training",
         size = 8745,
@@ -109,8 +110,8 @@ nested_dataset = [
         _type_ = "PIP.image // Nested",
         nested_status = True
     )
-]
-sub_dataset = [
+}
+sub_dataset = {
     DatasetInfo(
         data_name = "Glioma",
         size = 3157,
@@ -125,7 +126,7 @@ sub_dataset = [
 
     ),
     DatasetInfo(
-        data_name = "non_tumor",
+        data_name = "Non Tumor",
         size = 711,
         _type_ = "PIP.image // Training // Testing",
         nested_status = False
@@ -138,7 +139,7 @@ sub_dataset = [
         nested_status = False
         
     )
-]
+}
 
 @app.get("/Dataset Description")
 def get_datadesc():
@@ -146,12 +147,15 @@ def get_datadesc():
 
 @app.post("/Subdataset/{data_name}")
 def get_subdataset(data_name: str):
-    for item in sub_dataset:
-       print(f"{item.data_name} || {data_name}")
-       if item.data_name == data_name:
-           return sub_dataset
+    print("Requested:", data_name)
     
-    return sub_dataset[::]
+    for item in sub_dataset:
+        print("Checking:", item.data_name)
+
+        if item.data_name == data_name:
+            print("Match Found")
+            return item
+        
         
     
         
