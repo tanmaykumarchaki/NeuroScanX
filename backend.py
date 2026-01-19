@@ -144,4 +144,17 @@ sub_dataset = [
 def get_datadesc():
     return nested_dataset, sub_dataset
 
+@app.post("/Subdataset/{data_name}")
+def get_subdataset(data_name: str):
+    for item in sub_dataset:
+       print(f"{item.data_name} || {data_name}")
+       if item.data_name == data_name:
+           return sub_dataset
+    
+    return sub_dataset[::]
+        
+    
+        
+    
+
     
