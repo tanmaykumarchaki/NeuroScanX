@@ -14,9 +14,18 @@ class DeveloperInfo():
 
 class DatasetInfo():
     data_name: str
-    size: str
+    size: int
     _type_ : str
-    nested_status: str
+    nested_status: bool
+
+    def __init__(self, data_name, size, _type_, nested_status):
+        self.data_name = data_name,
+        self.size = size,
+        self._type_ = _type_,
+        self.nested_status = nested_status
+
+
+        
 
 class marksobtained():
     id : int
@@ -87,17 +96,52 @@ def get_marks_by_id(id: int):
     return marks[id-1]
     # return marks[id -1]
 
+nested_dataset = [
+    DatasetInfo(
+        data_name = "Medical Training",
+        size = 8745,
+        _type_ = "PIP.image // Nested",
+        nested_status = True
+    ),
+    DatasetInfo(
+        data_name = "Medical Testing",
+        size = 512,
+        _type_ = "PIP.image // Nested",
+        nested_status = True
+    )
+]
+sub_dataset = [
+    DatasetInfo(
+        data_name = "Glioma",
+        size = 3157,
+        _type_ = "PIP.image // Training // Testing",
+        nested_status = False
+    ),
+    DatasetInfo(
+        data_name = "Meningioma",
+        size = 3453,
+        _type_ = "PIP.image // Training // Testing",
+        nested_status = False
 
-
+    ),
+    DatasetInfo(
+        data_name = "non_tumor",
+        size = 711,
+        _type_ = "PIP.image // Training // Testing",
+        nested_status = False
+        
+    ),
+    DatasetInfo(
+        data_name = "pituitary",
+        size = 1424,
+        _type_ = "PIP.image // Training // Testing",
+        nested_status = False
+        
+    )
+]
 
 @app.get("/Dataset Description")
 def get_datadesc():
-    return DatasetInfo(
-        data_name= "Glioma",
-        size= "3157",
-        _type_= "List",
-        nested_status= "False"
-    )
-
+    return nested_dataset, sub_dataset
 
     
