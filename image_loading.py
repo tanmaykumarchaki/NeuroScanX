@@ -49,40 +49,69 @@ def structure_img(obj , level = 0):
 print("Structuring Image function =", dis.dis(structure_img))
 
 
-class imageconvert:
-    def __init__(self):
-        self.image = None
-        self.vectors = []
-        self.tensors = []
-        self.labels = []
+# class imageconvert:
+#     def __init__(self):
+#         self.image = None
+#         self.vectors = []
+#         self.tensors = []
+#         self.labels = []
     
-    def vectorimg_flat(self, image_var):
-        for class_group in image_var:
-            for img in class_group:
-                self.image = img.convert('RGB')
-                self.image_tensor = torch.from_numpy(np.array(self.image))
-                self.image_vec = self.image_tensor.view(-1)
-                self.vectors.append(self.image_vec)
+#     def vectorimg_flat(self, image_var):
+#         for class_group in image_var:
+#             for img in class_group:
+#                 self.image = img.convert('RGB')
+#                 self.image_tensor = torch.from_numpy(np.array(self.image))
+#                 self.image_vec = self.image_tensor.view(-1)
+#                 self.vectors.append(self.image_vec)
 
-        return torch.stack(self.vectors)
+#         return torch.stack(self.vectors)
     
-    def transformer(self, image_var, size=(224,224)):
-        transform = transforms.Compose([
-            transforms.Resize(size),
-            transforms.ToTensor()
-        ])
+#     def transformer(self, image_var, size=(224,224)):
+#         transform = transforms.Compose([
+#             transforms.Resize(size),
+#             transforms.ToTensor()
+#         ])
 
-        for labels , class_group in enumerate(image_var):
-            for img in class_group:
-                self.image = img.convert('RGB')
-                self.image_tensor = transform(self.image)
-                self.tensors.append(self.image_tensor)
-                self.labels.append(labels)
+#         for labels , class_group in enumerate(image_var):
+#             for img in class_group:
+#                 self.image = img.convert('RGB')
+#                 self.image_tensor = transform(self.image)
+#                 self.tensors.append(self.image_tensor)
+#                 self.labels.append(labels)
 
-        return torch.stack(self.tensors) , torch.tensor(self.labels)
-    
+#         return torch.stack(self.tensors) , torch.tensor(self.labels)
 
-print("Image Conversion Class =", dis.dis(imageconvert))
+
+
+# # print("Image Conversion Class =", dis.dis(imageconvert))
 
  
+def meta_data(var):
+    for class_id, image_list in enumerate(var):
+        for img_indx , img in enumerate(image_list):
+            metadata = []
+            channels ={
+                "L": 1,
+                "RGB": 3,
+                "RGBA": 4
+            }.get(mode, None)
 
+            w, h = img.size
+            mode = img.mode
+            asp_ratio = w/h
+
+            record = {
+                "class_id": class_id,
+                "image_index": img_indx,
+                "width": w,
+                "height": h,
+                "mode": mode,
+                "channels": channels,
+                "aspect_ratio": asp_ratio
+            }
+
+            metadata.append(record)
+
+
+
+        
