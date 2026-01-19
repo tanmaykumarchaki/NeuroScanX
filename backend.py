@@ -97,7 +97,7 @@ def get_marks_by_id(id: int):
     return marks[id-1]
     # return marks[id -1]
 
-nested_dataset = {
+nested_dataset = [
     DatasetInfo(
         data_name = "Medical Training",
         size = 8745,
@@ -110,8 +110,8 @@ nested_dataset = {
         _type_ = "PIP.image // Nested",
         nested_status = True
     )
-}
-sub_dataset = {
+]
+sub_dataset = [
     DatasetInfo(
         data_name = "Glioma",
         size = 3157,
@@ -139,7 +139,7 @@ sub_dataset = {
         nested_status = False
         
     )
-}
+]
 
 @app.get("/Dataset Description")
 def get_datadesc():
@@ -155,6 +155,11 @@ def get_subdataset(data_name: str):
         if item.data_name == data_name:
             print("Match Found")
             return item
+        
+        return item
+   
+        
+        
         
         
     
