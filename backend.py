@@ -14,12 +14,14 @@ class DeveloperInfo():
 
 
 class DatasetInfo():
+    id : int
     data_name: str
     size: int
     _type_ : str
     nested_status: bool
 
-    def __init__(self, data_name, size, _type_, nested_status):
+    def __init__(self,id, data_name, size, _type_, nested_status):
+        self.id = id,
         self.data_name = data_name,
         self.size = size,
         self._type_ = _type_,
@@ -99,12 +101,14 @@ def get_marks_by_id(id: int):
 
 nested_dataset = [
     DatasetInfo(
+        id = 10,
         data_name = "Medical Training",
         size = 8745,
         _type_ = "PIP.image // Nested",
         nested_status = True
     ),
     DatasetInfo(
+        id = 11,
         data_name = "Medical Testing",
         size = 512,
         _type_ = "PIP.image // Nested",
@@ -113,12 +117,14 @@ nested_dataset = [
 ]
 sub_dataset = [
     DatasetInfo(
+        id = 1,
         data_name = "Glioma",
         size = 3157,
         _type_ = "PIP.image // Training // Testing",
         nested_status = False
     ),
     DatasetInfo(
+        id = 2,
         data_name = "Meningioma",
         size = 3453,
         _type_ = "PIP.image // Training // Testing",
@@ -126,6 +132,7 @@ sub_dataset = [
 
     ),
     DatasetInfo(
+        id = 3,
         data_name = "Non Tumor",
         size = 711,
         _type_ = "PIP.image // Training // Testing",
@@ -133,6 +140,7 @@ sub_dataset = [
         
     ),
     DatasetInfo(
+        id = 4,
         data_name = "pituitary",
         size = 1424,
         _type_ = "PIP.image // Training // Testing",
@@ -145,18 +153,18 @@ sub_dataset = [
 def get_datadesc():
     return nested_dataset, sub_dataset
 
-@app.post("/Subdataset/{data_name}")
-def get_subdataset(data_name: str):
-    print("Requested:", data_name)
+@app.post("/Subdataset/{id}")
+def get_subdataset(id: int):
+    print("Requested:", id)
     
     for item in sub_dataset:
-        print("Checking:", item.data_name)
+        print("Checking:", item.id)
 
-        if item.data_name == data_name:
+        if item.id == id:
             print("Match Found")
-            return item
+            return sub_dataset
         
-        return item
+        return sub_dataset[id-1]
    
         
         
