@@ -90,11 +90,7 @@ def meta_data(var):
     for class_id, image_list in enumerate(var):
         for img_indx , img in enumerate(image_list):
             metadata = []
-            channels ={
-                "L": 1,
-                "RGB": 3,
-                "RGBA": 4
-            }.get(mode, None)
+
 
             w, h = img.size
             mode = img.mode
@@ -106,12 +102,12 @@ def meta_data(var):
                 "width": w,
                 "height": h,
                 "mode": mode,
-                "channels": channels,
                 "aspect_ratio": asp_ratio
             }
 
             metadata.append(record)
 
-
+            
+print("Meta Data Parsing Function :", dis.dis(meta_data))
 
         
