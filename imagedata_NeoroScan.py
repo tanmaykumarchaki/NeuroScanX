@@ -39,9 +39,9 @@ pituitary_tdir = r"C:\Users\Tanmay\OneDrive\Desktop\ML Project 2026\archive (1)\
 glioma_train = load_images(glioma_tdir)
 meningioma_train = load_images(meningioma_tdir)
 non_tumor_train = load_images(non_tumor_tdir)
-pituitary_tdir = load_images(pituitary_tdir)
+pituitary_train = load_images(pituitary_tdir)
 
-medical_train = [glioma_train, meningioma_train, non_tumor_train, pituitary_tdir]
+medical_train = [glioma_train, meningioma_train, non_tumor_train, pituitary_train]
 print(f"Total Training Images: {sum(len(img) for img in medical_train)}")
 print("All Training Images Loaded Successfully!")
 
