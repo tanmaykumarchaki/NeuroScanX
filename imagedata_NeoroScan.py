@@ -66,19 +66,32 @@ print("All Testing Images loaded successfully!")
 
 #Image Display 
 def display_img(
-        nested_variable,
+        data,
         node_index = None,
-        max_images = 10,
+        max_images = 15,
         figsize = (15,15)
 
 ):
-    if node_index is not None:
-        node = random.choice(nested_variable)
+    if isinstance(data, Image.Image):
+        plt.figure(figsize = figsize)
+        plt.imshow(data)
+        plt.axis('off')
+        plt.show()
+
+    if isinstance(data[0], (list, tuple)):
+        if node_index is None :
+            node = random.choice(data)
+
+        else:
+            node = data[node_index]
+
+
     else:
-        node = nested_variable[node_index]
+        node = data
 
     images = random.sample(node, min(len(node), max_images))
-    plt.figure(figsize= figsize)
+
+    plt.figure(figsize=figsize)
 
     for idx , img in enumerate(images):
         plt.subplot(1 , len(images), idx + 1)
