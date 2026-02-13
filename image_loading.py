@@ -111,3 +111,18 @@ def meta_data(var):
 print("Meta Data Parsing Function :", dis.dis(meta_data))
 
         
+def ten_2_df(tensor, label, split_type):
+    import pandas as pd 
+
+    tensor = tensor.view(tensor.size(0), -1)
+    tensor = tensor.detach().cpu().numpy()
+
+    feat_cols = [f"feat_{i}" for i in range(tensor.shape[1])]
+
+    df = pd.DataFrame(tensor, columns=feat_cols)
+    df["label"] = label
+    df["type"] = split_type
+
+    return df
+
+print("Tensor to DataFrame Function :", dis.dis(ten_2_df))
