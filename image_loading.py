@@ -111,3 +111,22 @@ def meta_data(var):
 print("Meta Data Parsing Function :", dis.dis(meta_data))
 
         
+def ten_2_df(tensor, labels, split):
+    import pandas as pd 
+    import numpy as np
+
+    if isinstance(tensor, torch.Tensor):
+        t = tensor.view(tensor.size(0), -1)
+        t = t.detach().cpu().numpy()
+
+    else:
+        raise ValueError("Input must be a torch.Tensor")
+    
+    feat_cols = [f"feat_{i}" for i in range(t.shape[1])]
+    df = pd.DataFrame(t, columns=feat_cols)
+
+    df["label"] = labels
+    df["type"] = split
+
+    return df
+print("Tensor to DataFrame Function:", dis.dis(ten_2_df))
