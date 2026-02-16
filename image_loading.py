@@ -111,15 +111,70 @@ def meta_data(var):
 print("Meta Data Parsing Function :", dis.dis(meta_data))
 
         
-def ten_2_df(tensor, labels, split):
+def ten_2_df(data, labels, split):
     import pandas as pd 
     import numpy as np
+    import torch
 
-    tensor_stack = torch.stack(tensor)
+    if isinstance(data, torch.tensor):
+      tensor_stack = data
+
+    elif isinstance(data, list):
+        fixed = []
+        for x in data:
+            if isinstance(x, torch.Tensor):
+                fixed.append(x)
+
+            elif isinstance(x, np.ndarray):
+                fixed.append(torch.from_numpy(x))
+
+            else:
+                fixed.append(torch.tensor(x))
+
+        tensor_stack = torch.stack(fixed)
+
+    
+    elif isinstance(data, np.ndarray):
+        tensor_stack = torch.from_numpy(data)
+
+    else:
+        try:
+            tensor_stack = torch.stack(list(data))
+
+        except: 
+            raise TypeError(f"Unsupported Type: {type(data)}")
+        
     tensor_stack = tensor_stack.view(tensor_stack.size(0), -1)
-
     t = tensor_stack.detach().cpu().numpy()
+    
 
+    #   tensor_stack = torch.stack(tensor)
+    #   tensor_stack = tensor_stack.view(tensor_stack.size(0), -1)
+
+    #   t = tensor_stack.detach().cpu().numpy()
+
+
+    # elif isinstance(tensor, list):
+
+    #     data = [torch.tensor(x) 
+    #             if isinstance(x, torch.Tensor) 
+    #             else x for x in tensor]
+        
+    #     tensor_stack = torch.stack(data)
+
+    # elif isinstance(tensor, np.ndarray):
+    #     tensor_stack = torch.from_numpy(tensor)
+
+    # else:
+    #     try:
+    #         tensor_stack = torch.stack(list(tensor))
+    #     except:
+    #         raise TypeError(F"Unsupported Tensor Type: {type(tensor)}")
+        
+
+    # tensor_stack = tensor_stack.view(tensor_stack.size(0), -1)
+
+    # t = tensor_stack.detach().cpu().numpy()
     
     feat_cols = [f"feat_{i}" for i in range(t.shape[1])]
     df = pd.DataFrame(t, columns=feat_cols)
