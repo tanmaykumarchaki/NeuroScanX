@@ -115,18 +115,10 @@ def ten_2_df(tensor, labels, split):
     import pandas as pd 
     import numpy as np
 
-    if isinstance(tensor, torch.Tensor):
-        t = tensor.view(tensor.size(0), -1)
-        t = t.detach().cpu().numpy()
+    tensor_stack = torch.stack(tensor)
+    tensor_stack = tensor_stack.view(tensor_stack.size(0), -1)
 
-    
-    
-    elif isinstance(tensor, np.ndarray):
-        t = t.reshape(tensor.shape[0], -1)
-
-    else:
-        raise ValueError("Input must be torch. Tensor or numpy.ndarray")
-        
+    t = tensor_stack.detach().cpu().numpy()
 
     
     feat_cols = [f"feat_{i}" for i in range(t.shape[1])]
