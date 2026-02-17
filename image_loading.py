@@ -116,36 +116,13 @@ def ten_2_df(data, labels, split):
     import numpy as np
     import torch
 
-    if isinstance(data, torch.tensor):
-      tensor_stack = data
+    tensor_stack = torch.stack(data)
 
-    elif isinstance(data, list):
-        fixed = []
-        for x in data:
-            if isinstance(x, torch.Tensor):
-                fixed.append(x)
-
-            elif isinstance(x, np.ndarray):
-                fixed.append(torch.from_numpy(x))
-
-            else:
-                fixed.append(torch.tensor(x))
-
-        tensor_stack = torch.stack(fixed)
-
-    
-    elif isinstance(data, np.ndarray):
-        tensor_stack = torch.from_numpy(data)
-
-    else:
-        try:
-            tensor_stack = torch.stack(list(data))
-
-        except: 
-            raise TypeError(f"Unsupported Type: {type(data)}")
-        
     tensor_stack = tensor_stack.view(tensor_stack.size(0), -1)
-    t = tensor_stack.detach().cpu().numpy()
+
+    t =  tensor_stack.detach().cpu().numpy()
+
+  
     
 
     #   tensor_stack = torch.stack(tensor)
