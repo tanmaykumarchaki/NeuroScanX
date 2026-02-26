@@ -161,3 +161,35 @@ def ten_2_df(data, labels, split):
 
     return df
 print("Tensor to DataFrame Function:", dis.dis(ten_2_df))
+
+
+def seq_2_df(seq_obj, labels, split):
+    import pandas as pd 
+    import numpy as np
+    import torch
+
+    if isinstance(seq_obj, torch.nn.Sequential):
+        raise ValueError("Sequential Objects are not supported for conversion !")
+    
+    if isinstance(seq_obj, list):
+        tensor_stack = torch.stack(seq_obj)
+
+    elif isinstance(seq_obj, torch.Tensor):
+        tensor_stack = seq_obj
+
+    else:
+        raise ValueError("Unsupported data type")
+    
+    tensor_stack = tensor_stack.view(tensor_stack.size(0), -1)
+
+    t = tensor_stack.detach().cpu().numpy()
+
+    feat_cols = [f"feat_{i}" for i in range(t.shape[1])]
+
+    df = pd.DataFrame(t, columns= feat_cols)
+    df["label"] = labels
+    df["split"] = split
+
+    return df
+
+print("Sequential To DataFrame =", dis.dis(seq_2_df))
