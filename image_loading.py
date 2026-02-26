@@ -162,11 +162,29 @@ def ten_2_df(data, labels, split):
     return df
 print("Tensor to DataFrame Function:", dis.dis(ten_2_df))
 
+def extract_feature(loader, model):
+    model.eval()
+    features = []
+
+    with torch.no_grad():
+        for images in loader:
+            images = images.to(device)
+
+            output = model(images)
+
+            output = output.view(output.size(0), -1)
+
+            features.append(output.cpu())
+
+    return torch.cat(features)
+
+print("Feature Extraction function =", dis.dis(extract_feature))
 
 def seq_2_df(seq_obj, labels, split):
     import pandas as pd 
     import numpy as np
     import torch
+
 
     if isinstance(seq_obj, torch.nn.Sequential):
         raise ValueError("Sequential Objects are not supported for conversion !")
