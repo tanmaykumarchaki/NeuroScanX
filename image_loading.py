@@ -168,7 +168,7 @@ def extract_feature(loader, model):
 
     with torch.no_grad():
         for images in loader:
-            images = images.to(device)
+            images = images.to(loader.device)
 
             output = model(images)
 
