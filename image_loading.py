@@ -162,23 +162,65 @@ def ten_2_df(data, labels, split):
     return df
 print("Tensor to DataFrame Function:", dis.dis(ten_2_df))
 
-def extract_feature(loader, model):
-    model.eval()
-    features = []
+# def extract_feature(loader, model):
+#     model.eval()
+#     features = []
 
-    with torch.no_grad():
-        for images in loader:
-            images = images.to(loader.device)
+#     with torch.no_grad():
+#         for images in loader:
+#             images = images.to(loader)
 
-            output = model(images)
+#             output = model(images)
 
-            output = output.view(output.size(0), -1)
+#             output = output.view(output.size(0), -1)
 
-            features.append(output.cpu())
+#             features.append(output.cpu())
 
-    return torch.cat(features)
+#     return torch.cat(features)
 
-print("Feature Extraction function =", dis.dis(extract_feature))
+# print("Feature Extraction function =", dis.dis(extract_feature))
+
+def norm_ts(var):
+    print("Incoming Type:", type(var))
+
+    #Tensor Verification
+
+    if isinstance(var, torch.tensor):
+        print("Data is already a Tensor:", type(var))
+        return var.view(var.size(0), -1)
+    
+    #List Verification
+
+    elif isinstance(var, list):
+
+        if len(var) == 0:
+            raise ValueError("List is empty")
+        
+        print("Element type inside list:", type(var[0]))
+
+        # Case I - List of Tensors
+
+        if isinstance(var[0], torch.Tensor):
+            print("List Contains Tensors, Stacking....")
+            stacked = torch.stack(var)
+
+        # Case II - List of Sequential (exception error)
+
+        elif isinstance(var[0], torch.nn.Sequential):
+            raise ValueError("List contains Sequential Models, not Tensor outputs !")
+        
+        else:
+            raise ValueError("Unsupported element type inside list")
+        
+        return stacked.view(stacked.size(0), -1)
+    
+    # Other Conditions
+
+    else:
+        raise ValueError("Unsupported data type passed.")
+    
+print("Normaliser To Tensor:",dis.dis(norm_ts))
+        
 
 def seq_2_df(seq_obj, labels, split):
     import pandas as pd 
