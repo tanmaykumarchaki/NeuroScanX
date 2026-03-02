@@ -180,42 +180,46 @@ print("Tensor to DataFrame Function:", dis.dis(ten_2_df))
 
 # print("Feature Extraction function =", dis.dis(extract_feature))
 
+import torch
+
 def norm_ts(var):
+
     print("Incoming Type:", type(var))
 
-    #Tensor Verification
-
-    if isinstance(var, torch.tensor):
-        print("Data is already a Tensor:", type(var))
+    # -------------------------
+    # Case 1: Already Tensor
+    # -------------------------
+    if isinstance(var, torch.Tensor):
+        print("Data is already a Tensor")
         return var.view(var.size(0), -1)
-    
-    #List Verification
 
+    # -------------------------
+    # Case 2: List
+    # -------------------------
     elif isinstance(var, list):
 
         if len(var) == 0:
             raise ValueError("List is empty")
-        
+
         print("Element type inside list:", type(var[0]))
 
-        # Case I - List of Tensors
-
+        # Case A: List of Tensors
         if isinstance(var[0], torch.Tensor):
-            print("List Contains Tensors, Stacking....")
+            print("List contains Tensors. Stacking...")
             stacked = torch.stack(var)
 
-        # Case II - List of Sequential (exception error)
-
+        # Case B: List of Sequential (Wrong)
         elif isinstance(var[0], torch.nn.Sequential):
-            raise ValueError("List contains Sequential Models, not Tensor outputs !")
-        
+            raise ValueError("List contains Sequential models, not Tensor outputs!")
+
         else:
             raise ValueError("Unsupported element type inside list")
-        
-        return stacked.view(stacked.size(0), -1)
-    
-    # Other Conditions
 
+        return stacked.view(stacked.size(0), -1)
+
+    # -------------------------
+    # Case 3: Unsupported Type
+    # -------------------------
     else:
         raise ValueError("Unsupported data type passed.")
     
