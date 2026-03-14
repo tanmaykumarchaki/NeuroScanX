@@ -257,3 +257,12 @@ def seq_2_df(seq_obj, labels, split):
     return df
 
 print("Sequential To DataFrame =", dis.dis(seq_2_df))
+
+
+def clean_label(label):
+    label = label.lower()  #Normalize Case
+    label = label.strip()  #remove extra spaces
+
+    return label
+
+print("Clean Label Function = ",dis.dis(clean_label))
