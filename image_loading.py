@@ -261,6 +261,8 @@ print("Sequential To DataFrame =", dis.dis(seq_2_df))
 
 def clean_label(label):
     label = label.lower()  #Normalize Case
+    label = label.replace("train","")
+    label = label.replace("test","")
     label = label.strip()  #remove extra spaces
 
     return label
